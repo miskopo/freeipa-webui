@@ -77,4 +77,20 @@ Feature: User manipulation
     * I click on set button
     Then I should see field certificate_mapping filled with "CR MAPPING CONTENT"
 
-
+  Scenario: Password expiration notification
+      Given There is an entry testuser1
+      * There is an entry testgroup1
+      * There is an entry pwpolicy1
+      When Navigate to entity "config"
+      * Modify record "ipapwdexpadvnotify"
+      * I add user testuser1 to group testgroup1
+      * I open details for entry testgroup1
+      * I set pwpolicy1 for entry testgroup1
+      * I open details for entry testuser1
+      * I reset password for entry testuser1 with password "Secret123"
+      * I logout
+      * I login as an entry testuser1
+      Then I should see field header filled with "Your password expires in 6 days."
+      When I do profile menu action "password_reset"
+      * I fill password dialog with password "Secret123"
+      Then Password should be reset

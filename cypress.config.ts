@@ -7,6 +7,7 @@ export default defineConfig({
   e2e: {
     specPattern: "**/*.feature",
     baseUrl: "https://server.ipa.demo/",
+    testIsolation: true,
 
     async setupNodeEvents(
       on: Cypress.PluginEvents,

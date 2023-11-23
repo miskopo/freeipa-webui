@@ -39,11 +39,11 @@ Vagrant.configure("2") do |config|
 
   # Add eth0 ip address to /etc/hosts
   config.vm.provision "shell",
-    inline: "echo \"192.168.56.10 server.ipa.demo\" | tee -a /etc/hosts"
+    inline: "echo \"$(hostname -I) server.ipa.demo\" | tee -a /etc/hosts"
 
   # Install ipa server
   config.vm.provision "shell",
-    inline: "ipa-server-install -U -n server.ipa.demo -r IPA.DEMO -p Secret123 -a Secret123 --forwarder 8.8.8.8 --setup-dns --setup-kra"
+    inline: "ipa-server-install -U -n server.ipa.demo -r IPA.DEMO -p Secret123 -a Secret123 --auto-forwarders  --setup-dns --setup-kra"
 
   # Set SELinux to permissive mode
   config.vm.provision "shell", inline: <<~EOS
